@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in | Fischer</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="logo"><span class="chip"></span>Fischer</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#features">Stats</a>
+      <a href="index.html#features">Equity Calculator</a>
+      <a href="index.html#features">Pascal Trainer</a>
+    </div>
+    <div class="nav-actions">
+      <a href="register.html" class="btn btn-gold">Sign up</a>
+    </div>
+  </nav>
+
+  <main class="auth">
+    <section class="auth-side">
+      <h2 class="serif">Welcome back<br>to the table.</h2>
+      <p>Your sessions, stats, and trainer progress are right where you left them.</p>
+      <div class="card-fan" aria-hidden="true">
+        <div class="playing-card" style="left:0; transform:rotate(-12deg)">Q<span class="suit">♣</span></div>
+        <div class="playing-card red" style="left:44px; transform:rotate(-4deg)">J<span class="suit">♦</span></div>
+        <div class="playing-card" style="left:88px; transform:rotate(4deg)">10<span class="suit">♠</span></div>
+        <div class="playing-card red" style="left:132px; transform:rotate(12deg)">A<span class="suit">♥</span></div>
+      </div>
+    </section>
+
+    <section class="auth-main">
+      <!-- Milestone 2: action will point to the back-end login API (POST /api/auth/login) -->
+      <form class="panel auth-form" id="login-form" action="#" method="post" novalidate>
+        <h1 class="serif">Log in</h1>
+        <p class="subtitle">Enter your username or email and password.</p>
+
+        <div class="field">
+          <label for="identifier">Username or email</label>
+          <input type="text" id="identifier" name="identifier" autocomplete="username" placeholder="bgrinder" required>
+          <span class="field-error" id="identifier-error"></span>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Your password" required>
+          <span class="field-error" id="password-error"></span>
+        </div>
+
+        <div class="form-row">
+          <label class="checkbox" style="margin:0"><input type="checkbox" name="remember"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-gold btn-full">Log in</button>
+        <div class="form-message" id="login-message" role="status"></div>
+
+        <p class="form-foot">New to Fischer? <a href="register.html">Create an account</a></p>
+        <p class="secure-note">🔒 Protected with hashed passwords and email verification</p>
+      </form>
+    </section>
+  </main>
+
+  <script src="js/forms.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fischer | Play the math, not the cards</title>
+  <meta name="description" content="Fischer is a poker training and bankroll platform: real statistics, a Monte Carlo equity calculator, and a preflop trainer.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="logo"><span class="chip"></span>Fischer</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="#features">Stats</a>
+      <a href="#features">Equity Calculator</a>
+      <a href="#features">Pascal Trainer</a>
+    </div>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-ghost">Log in</a>
+      <a href="register.html" class="btn btn-gold">Sign up</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Poker training &amp; bankroll platform</p>
+        <h1 class="serif">Play the math,<br><em>not the cards.</em></h1>
+        <p class="lead">Turn your sessions into real statistics, calculate the odds of any hand, and drill preflop decisions until they're automatic.</p>
+        <div class="ctas">
+          <a href="register.html" class="btn btn-gold">Create free account</a>
+          <a href="login.html" class="btn btn-ghost">Log in</a>
+        </div>
+      </div>
+
+      <div class="panel dash" aria-label="Sample dashboard preview">
+        <span class="sample-tag">Sample data</span>
+        <div class="stats">
+          <div class="stat">
+            <div class="dash-label">Total profit</div>
+            <div class="stat-value up">+$1,240</div>
+          </div>
+          <div class="stat">
+            <div class="dash-label">Win rate (95% CI)</div>
+            <div class="stat-value">$18 <small>±22/hr</small></div>
+          </div>
+          <div class="stat">
+            <div class="dash-label">Risk of ruin</div>
+            <div class="stat-value">3.1%</div>
+          </div>
+        </div>
+        <div class="dash-label">Profit over last 20 sessions</div>
+        <svg class="chart" viewBox="0 0 400 130" preserveAspectRatio="none" role="img" aria-label="Profit trending upward over 20 sessions">
+          <line x1="0" y1="110" x2="400" y2="110" stroke="#1f5e4a" stroke-dasharray="4 4"/>
+          <polyline fill="none" stroke="#d8b25a" stroke-width="3" stroke-linejoin="round"
+            points="0,110 20,104 40,112 60,95 80,98 100,84 120,90 140,76 160,80 180,70 200,74 220,58 240,64 260,50 280,56 300,42 320,46 340,30 360,36 380,22 400,18"/>
+        </svg>
+        <div class="equity-preview">
+          <div class="playing-card">A<span class="suit">♠</span></div>
+          <div class="playing-card red">K<span class="suit">♥</span></div>
+          <p>Equity: <b>AK vs QQ</b><br>43% vs 57% · 10,000 deals</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <article class="panel feature">
+        <div class="feature-icon">σ</div>
+        <h3 class="serif">Bankroll Stats</h3>
+        <p>Log sessions and see your true win rate with a confidence interval, variance, and risk of ruin.</p>
+      </article>
+      <article class="panel feature">
+        <div class="feature-icon">%</div>
+        <h3 class="serif">Equity Calculator</h3>
+        <p>Pick any hands and board. A Monte Carlo simulation shows how often each one wins.</p>
+      </article>
+      <article class="panel feature">
+        <div class="feature-icon">♠</div>
+        <h3 class="serif">Pascal Trainer</h3>
+        <p>Get dealt a hand and position, make your play, and get instant feedback.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Fischer · IT 340 course project</span>
+    <span>For study and tracking only. No real-money play.</span>
+  </footer>
+
+</body>
+</html>
