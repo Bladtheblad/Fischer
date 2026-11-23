@@ -1,0 +1,18 @@
+{
+  "name": "fischer-api",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Fischer back-end API: account registration, login, and sessions",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "mongodb": "^7.9.1"
+  }
+}

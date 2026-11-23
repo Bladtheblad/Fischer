@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Fischer</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="logo"><span class="chip"></span>Fischer</a>
+    <div class="nav-links">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="#tools">Stats</a>
+      <a href="#tools">Equity Calculator</a>
+      <a href="#tools">Pascal Trainer</a>
+    </div>
+    <div class="nav-actions">
+      <span class="nav-user" id="nav-user"></span>
+      <button type="button" class="btn btn-ghost" id="logout-button">Log out</button>
+    </div>
+  </nav>
+
+  <main class="dashboard" id="dashboard" hidden>
+    <section class="dashboard-head">
+      <p class="eyebrow">Your table</p>
+      <h1 class="serif">Welcome, <span id="first-name"></span>.</h1>
+      <p class="lead">You're logged in. Your poker tools arrive in Milestone 3.</p>
+    </section>
+
+    <section class="dashboard-grid" id="tools">
+      <article class="panel feature">
+        <div class="feature-icon">σ</div>
+        <h3 class="serif">Bankroll Stats</h3>
+        <p>Log sessions and see your win rate with a confidence interval, variance, and risk of ruin.</p>
+        <span class="soon">Coming in Milestone 3</span>
+      </article>
+      <article class="panel feature">
+        <div class="feature-icon">%</div>
+        <h3 class="serif">Equity Calculator</h3>
+        <p>Pick any hands and board. A Monte Carlo simulation shows how often each one wins.</p>
+        <span class="soon">Coming in Milestone 3</span>
+      </article>
+      <article class="panel feature">
+        <div class="feature-icon">♠</div>
+        <h3 class="serif">Pascal Trainer</h3>
+        <p>Get dealt a hand and position, make your play, and get instant feedback.</p>
+        <span class="soon">Coming in Milestone 3</span>
+      </article>
+    </section>
+
+    <section class="panel account">
+      <h2 class="serif">Your account</h2>
+      <dl>
+        <dt>Name</dt><dd id="account-name"></dd>
+        <dt>Username</dt><dd id="account-username"></dd>
+        <dt>Email</dt><dd id="account-email"></dd>
+        <dt>Member since</dt><dd id="account-since"></dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Fischer · IT 340 course project</span>
+    <span>For study and tracking only. No real-money play.</span>
+  </footer>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

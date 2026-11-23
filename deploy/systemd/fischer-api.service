@@ -1,0 +1,26 @@
+[Unit]
+Description=Fischer API (Node.js + Express)
+Documentation=https://github.com/Bladtheblad/fischer
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=fischer-api
+Group=fischer-api
+WorkingDirectory=/opt/fischer/backend
+EnvironmentFile=/etc/fischer/api.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=5
+
+# Hardening: the service can't gain privileges or write to the system.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+
+[Install]
+WantedBy=multi-user.target

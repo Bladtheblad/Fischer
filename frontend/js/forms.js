@@ -1,6 +1,6 @@
-// Fischer — client-side form validation for the login and register pages.
-// Milestone 1: validates input in the browser only. In Milestone 2 these forms
-// will send their data to the back-end API, which validates again on the server.
+// Fischer — login and register forms.
+// Validates input in the browser, then sends it to the back-end API through
+// nginx (/api/... on the front-end VM is forwarded to the back-end VM).
 
 function setError(id, message) {
   const input = document.getElementById(id);
@@ -10,17 +10,62 @@ function setError(id, message) {
   return !message;
 }
 
-function showMessage(id, text) {
+function showMessage(id, text, type = 'success') {
   const box = document.getElementById(id);
   box.textContent = text;
+  box.classList.toggle('error', type === 'error');
   box.classList.add('show');
+}
+
+function hideMessage(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+// Sends JSON to the API and returns { ok, status, data }.
+async function postJson(url, body) {
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok, status: res.status, data };
+  } catch {
+    return { ok: false, status: 0, data: { error: "Can't reach the server. Check that the back-end VM is running." } };
+  }
+}
+
+function setBusy(button, busy, busyText) {
+  if (!button.dataset.label) button.dataset.label = button.textContent;
+  button.disabled = busy;
+  button.textContent = busy ? busyText : button.dataset.label;
+}
+
+// Shows the server's per-field errors next to the matching inputs.
+function showFieldErrors(fields, idMap = {}) {
+  for (const [field, message] of Object.entries(fields || {})) {
+    setError(idMap[field] || field, message);
+  }
 }
 
 // ---------- Login ----------
 const loginForm = document.getElementById('login-form');
 if (loginForm) {
-  loginForm.addEventListener('submit', (event) => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('registered') === '1') {
+    showMessage('login-message', 'Account created! Log in to continue.');
+  }
+
+  // Already logged in? Go straight to the dashboard.
+  fetch('/api/auth/me', { credentials: 'same-origin' })
+    .then((res) => { if (res.ok) window.location.replace('dashboard.html'); })
+    .catch(() => {});
+
+  loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    hideMessage('login-message');
     const identifier = loginForm.identifier.value.trim();
     const password = loginForm.password.value;
 
@@ -28,9 +73,19 @@ if (loginForm) {
       setError('identifier', identifier ? '' : 'Enter your username or email.'),
       setError('password', password ? '' : 'Enter your password.'),
     ].every(Boolean);
+    if (!ok) return;
 
-    if (ok) {
-      showMessage('login-message', 'Looks good! Logging in will be connected to the server in Milestone 2.');
+    const button = loginForm.querySelector('button[type=submit]');
+    setBusy(button, true, 'Logging in…');
+    const result = await postJson('/api/auth/login', { identifier, password });
+    setBusy(button, false);
+
+    if (result.ok) {
+      window.location.href = 'dashboard.html';
+    } else {
+      showFieldErrors(result.data.fields);
+      showMessage('login-message', result.data.error || 'Login failed. Please try again.', 'error');
+      loginForm.password.value = '';
     }
   });
 }
@@ -70,8 +125,9 @@ if (registerForm) {
       : 'At least 8 characters, including a number';
   });
 
-  registerForm.addEventListener('submit', (event) => {
+  registerForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    hideMessage('register-message');
     const f = registerForm;
     const pw = f.password.value;
 
@@ -88,9 +144,26 @@ if (registerForm) {
         ? '' : 'Passwords do not match.'),
       setError('terms', f.terms.checked ? '' : 'Please accept the terms to continue.'),
     ].every(Boolean);
+    if (!ok) return;
 
-    if (ok) {
-      showMessage('register-message', 'Looks good! Account creation will be connected to the server in Milestone 2.');
+    const button = f.querySelector('button[type=submit]');
+    setBusy(button, true, 'Creating account…');
+    const result = await postJson('/api/auth/register', {
+      firstName: f.firstName.value.trim(),
+      lastName: f.lastName.value.trim(),
+      username: f.username.value.trim(),
+      email: f.email.value.trim(),
+      password: pw,
+    });
+    setBusy(button, false);
+
+    if (result.ok) {
+      showMessage('register-message', 'Account created! Taking you to the login page…');
+      setTimeout(() => { window.location.href = 'login.html?registered=1'; }, 1200);
+    } else {
+      // The server calls the password field "password"; on this page its input id is "newPassword".
+      showFieldErrors(result.data.fields, { password: 'newPassword' });
+      showMessage('register-message', result.data.error || 'Sign-up failed. Please try again.', 'error');
     }
   });
 }
